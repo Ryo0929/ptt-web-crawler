@@ -49,5 +49,15 @@ article_id_list=get_article_ids(root_url,board)
 crawling_data_by_ids(board,article_id_list)
 ```
 
+Output include a list of ID txt file and `BOARD_NAME-ID.json` 
 
-Output would be `BOARD_NAME-ID.json`
+### 說明
+```
+get_article_ids(root_url,board)
+```
+get_article_ids 會依照目錄階層結構爬取文章的url放入list中，並寫入txt檔案
+![image](https://github.com/Ryo0929/ptt-web-crawler/blob/master/800px-Sorted_binary_tree_breadth-first_traversal.png)
+```
+crawling_data_by_ids(board,article_id_list)
+```
+crawling_data_by_ids 會去爬取該list中的id，並將結果產出.json檔案
