@@ -1,6 +1,6 @@
 # ptt-web-crawler (PTT 網路版爬蟲-精華區爬蟲)
 
-### [原版本](https://github.com/jwlin/ptt-web-crawler)
+### [原版本在此](https://github.com/jwlin/ptt-web-crawler)
 
 
 * 爬取精華區目錄下所有文章
