@@ -1,15 +1,10 @@
-# ptt-web-crawler (PTT 網路版爬蟲) [![Build Status](https://travis-ci.org/jwlin/ptt-web-crawler.svg?branch=master)](https://travis-ci.org/jwlin/ptt-web-crawler)
+# ptt-web-crawler (PTT 網路版爬蟲-精華區爬蟲)
 
-### [English Readme](#english_desc)
-### [Live demo](http://app.castman.net/ptt-web-crawler)
-### [Scrapy 版本](https://github.com/afunTW/ptt-web-crawler) by afunTW
+### [原版本](https://github.com/jwlin/ptt-web-crawler)
 
-特色
 
-* 支援單篇及多篇文章抓取
-* 過濾資料內空白、空行及特殊字元
+* 爬取精華區目錄下所有文章
 * JSON 格式輸出
-* 支援 Python 2.7, 3.4-3.6
 
 輸出 JSON 格式
 ```
@@ -40,57 +35,19 @@
 }
 ```
 
-### 參數說明
-
-```commandline
-python crawler.py -b 看板名稱 -i 起始索引 結束索引 (設為負數則以倒數第幾頁計算) 
-python crawler.py -b 看板名稱 -a 文章ID 
-```
-
 ### 範例
 
-爬取 PublicServan 板第 100 頁 (https://www.ptt.cc/bbs/PublicServan/index100.html) 
-到第 200 頁 (https://www.ptt.cc/bbs/PublicServan/index200.html) 的內容，
-輸出至 `PublicServan-100-200.json`
+爬取 Marvel 板 精華區 知識區 (https://www.ptt.cc/man/marvel/DDF/index.html)
 
-* 直接執行腳本
+* 執行jupyter notebook
 
 ```commandline
-cd PttWebCrawler
-python crawler.py -b PublicServan -i 100 200
-```
-    
-* 呼叫 package
+root_url="DDF/index.html"
+board="marvel"
 
-```commandline
-python setup.py install
-python -m PttWebCrawler -b PublicServan -i 100 200
+article_id_list=get_article_ids(root_url,board)
+crawling_data_by_ids(board,article_id_list)
 ```
 
-* 作為函式庫呼叫
 
-```python
-from PttWebCrawler.crawler import *
-
-c = PttWebCrawler(as_lib=True)
-c.parse_articles(100, 200, 'PublicServan')
-```
-
-### 測試
-```commandline
-python test.py
-```
-
-***
-
-<a name="english_desc"></a>ptt-web-crawler is a crawler for the web version of PTT, the largest online community in Taiwan. 
-
-    usage: python crawler.py [-h] -b BOARD_NAME (-i START_INDEX END_INDEX | -a ARTICLE_ID) [-v]
-    optional arguments:
-      -h, --help                  show this help message and exit
-      -b BOARD_NAME               Board name
-      -i START_INDEX END_INDEX    Start and end index
-      -a ARTICLE_ID               Article ID
-      -v, --version               show program's version number and exit
-
-Output would be `BOARD_NAME-START_INDEX-END_INDEX.json` (or `BOARD_NAME-ID.json`)
+Output would be `BOARD_NAME-ID.json`
