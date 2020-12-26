@@ -39,7 +39,7 @@
 
 爬取 Marvel 板 精華區 知識區 (https://www.ptt.cc/man/marvel/DDF/index.html)
 
-* 執行jupyter notebook
+* 執行man_crawling.ipynb
 
 ```commandline
 root_url="DDF/index.html"
