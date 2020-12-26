@@ -64,7 +64,7 @@ class PttWebCrawler(object):
                 index = start + i
                 print('Processing index:', str(index))
                 resp = requests.get(
-                    url = self.PTT_URL + '/bbs/' + board + '/index' + str(index) + '.html',
+                    url = self.PTT_URL + '/man/' + board + '/index' + str(index) + '.html',
                     cookies={'over18': '1'}, verify=VERIFY, timeout=timeout
                 )
                 if resp.status_code != 200:
@@ -74,7 +74,7 @@ class PttWebCrawler(object):
                 divs = soup.find_all("div", "r-ent")
                 for div in divs:
                     try:
-                        # ex. link would be <a href="/bbs/PublicServan/M.1127742013.A.240.html">Re: [問題] 職等</a>
+                        # ex. link would be <a href="/man/PublicServan/M.1127742013.A.240.html">Re: [問題] 職等</a>
                         href = div.find('a')['href']
                         link = self.PTT_URL + href
                         article_id = re.sub('\.html', '', href.split('/')[-1])
@@ -89,7 +89,8 @@ class PttWebCrawler(object):
             return filename
 
     def parse_article(self, article_id, board, path='.'):
-        link = self.PTT_URL + '/bbs/' + board + '/' + article_id + '.html'
+        link = self.PTT_URL + '/man/' + board + '/' + article_id + '.html'
+        article_id=article_id.replace("/","-")
         filename = board + '-' + article_id + '.json'
         filename = os.path.join(path, filename)
         self.store(filename, self.parse(link, article_id, board), 'w')
@@ -188,10 +189,10 @@ class PttWebCrawler(object):
     @staticmethod
     def getLastPage(board, timeout=3):
         content = requests.get(
-            url= 'https://www.ptt.cc/bbs/' + board + '/index.html',
+            url= 'https://www.ptt.cc/man/' + board + '/index.html',
             cookies={'over18': '1'}, timeout=timeout
         ).content.decode('utf-8')
-        first_page = re.search(r'href="/bbs/' + board + '/index(\d+).html">&lsaquo;', content)
+        first_page = re.search(r'href="/man/' + board + '/index(\d+).html">&lsaquo;', content)
         if first_page is None:
             return 1
         return int(first_page.group(1)) + 1
